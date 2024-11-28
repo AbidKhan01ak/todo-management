@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.akstudios</groupId>
-	<artifactId>todo-management</artifactId>
+	<artifactId>todo-management-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todo-management</name>
 	<description>Todo Management Project</description>

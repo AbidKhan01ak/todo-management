@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const HeaderComponent = () => {
   return (
@@ -9,6 +10,18 @@ const HeaderComponent = () => {
                     <a href='http://localhost:3003' className='navbar-brand'>
                     Todo Management Application</a>
                 </div>
+                <div className='collapse navbar-collapse'>
+                  <ul className='navbar-nav'>
+                    <li className='nav-item'>
+                      <NavLink to="/todos" className="nav-link">Todos</NavLink>
+                    </li>
+                  </ul>
+                </div>
+                <ul className='navbar-nav'>
+                    <li className='nav-item'>
+                      <NavLink to="/register" className="nav-link">Register</NavLink>
+                    </li>
+                  </ul>
             </nav>
         </header>
     </div>

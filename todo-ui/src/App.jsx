@@ -4,6 +4,7 @@ import ListTodoComponent from './components/ListTodoComponent'
 import HeaderComponent from './components/HeaderComponent'
 import FooterComponent from './components/FooterComponent'
 import TodoComponent from './components/TodoComponent';
+import RegisterComponent from './components/RegisterComponent';
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
         <Route path='/todos' element={<ListTodoComponent/>}></Route> 
         <Route path='/add-todo' element={<TodoComponent/>}></Route> 
         <Route path='/update-todo/:id' element={<TodoComponent/>}></Route> 
+        <Route path='/register' element={<RegisterComponent/>}></Route> 
+        
       </Routes>
       <FooterComponent/>
     </BrowserRouter>

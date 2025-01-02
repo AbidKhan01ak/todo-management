@@ -1,5 +1,6 @@
 package com.akstudios.todo.controller;
 
+import com.akstudios.todo.dto.JwtAuthResponse;
 import com.akstudios.todo.dto.LoginDto;
 import com.akstudios.todo.dto.RegisterDto;
 import com.akstudios.todo.service.AuthService;
@@ -24,8 +25,12 @@ public class AuthController {
 
     //Build Login REST API
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String response = authService.login(loginDto);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+        String token = authService.login(loginDto);
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
 }

@@ -13,10 +13,12 @@ const LoginComponent = () => {
     
         await loginAPICall(username, password).then((response) => {
             console.log('response.data', response.data);
-            // const token = 'Basic ' + window.btoa(username + ":" + password);
+
             const token = 'Bearer ' + response.data.accessToken;
+            const role = response.data.role;
+
             storeToken(token);
-            savedLoggedInUser(username);
+            savedLoggedInUser(username, role);
             navigator("/todos");
             window.location.reload(false);
         }).catch(error => {

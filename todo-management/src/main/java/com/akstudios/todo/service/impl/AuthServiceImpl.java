@@ -1,5 +1,6 @@
 package com.akstudios.todo.service.impl;
 
+import com.akstudios.todo.dto.JwtAuthResponse;
 import com.akstudios.todo.dto.LoginDto;
 import com.akstudios.todo.dto.RegisterDto;
 import com.akstudios.todo.entity.Role;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -61,13 +63,34 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public JwtAuthResponse login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(),
                 loginDto.getPassword()
         ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return tokenProvider.generateToken(authentication);
+        String token = tokenProvider.generateToken(authentication);
+
+        Optional<User> userOptional = userRepository.findByUsernameOrEmail(loginDto.getUsernameOrEmail(),
+                loginDto.getUsernameOrEmail());
+
+        String role = null;
+
+        if(userOptional.isPresent()){
+            User loggedInUser = userOptional.get();
+            Optional<Role> optionalRole = loggedInUser.getRoles().stream().findFirst();
+
+            if(optionalRole.isPresent()){
+                Role userRole = optionalRole.get();
+                role = userRole.getName();
+            }
+        }
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setRole(role);
+        jwtAuthResponse.setAccessToken(token);
+
+        return jwtAuthResponse;
     }
 }
